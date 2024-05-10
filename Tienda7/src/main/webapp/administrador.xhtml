@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<ui:composition template="layout.xhtml">
+	<ui:define name="title">Página del ADMINISTRADOR</ui:define>
+	<ui:define name="content">
+		<h2>Productos</h2>
+		<h:form>
+			<h:dataTable value="#{adminMB.productos}" var="prod">
+			
+			<h:column>
+				<f:facet name="header">Referencia</f:facet>
+				#{prod.idProducto}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Tipo</f:facet>
+				#{prod.categoria.tipo}
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Descripcion</f:facet>
+				#{prod.descripcion}
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Precio</f:facet>
+				#{prod.precio} €
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Accion</f:facet>
+				<h:commandButton action="#{adminMB.eliminarProducto(prod.idProducto)}" value="Eliminar" />
+			</h:column>
+				
+			</h:dataTable>
+		</h:form>
+		
+		<h:form>
+			<table>
+				<tr>
+					<th colspan="4">Añadir nuevo producto</th>
+				</tr>
+				<tr>
+					<th>Categoria</th>
+					<th>Descripcion</th>
+					<th>Precio</th>
+					<th>Accion</th>
+				</tr>			
+				<tr>
+					<td>
+						<h:selectOneMenu value="#{productoMB.categoria}">
+							<f:selectItems value="#{productoMB.categorias}" var="cat" itemValue="#{productoMB.categorias.indexOf(cat)}" itemLabel="#{cat.tipo}"/>
+						</h:selectOneMenu>
+					</td>
+					<td>
+						<h:inputText id="descripcion" value="#{productoMB.entity.descripcion}" required="true" requiredMessage="ERROR! Tienes que añadir una descripcion"/>
+						<h:message for="descripcion" style="color:red; font-size:12px;"/>
+					</td>
+					<td>
+						<h:inputText id="precio" type="Number" value="#{productoMB.entity.precio}" required="true" requiredMessage="ERROR! Tienes que añadir un precio"/>
+						<h:message for="precio" style="color:red; font-size:12px;"/>
+					</td>
+					<td>
+						<h:commandButton action="#{adminMB.anadirProducto(productoMB.entity)}" value="Añadir" />
+					</td>
+				</tr>
+			</table>
+		</h:form>
+		
+		<h2>Clientes</h2>
+		
+		<h:form>
+		
+			<h:dataTable value="#{adminMB.clientes}" var="cliente">
+				<f:facet name="header">Listado de clientes</f:facet>
+				
+				<h:column>
+					<f:facet name="header">DNI</f:facet>
+					#{cliente.username}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Nombre</f:facet>
+					#{cliente.nombre}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Direccion</f:facet>
+					#{cliente.direccion}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Contraseña</f:facet>
+					*******
+				</h:column>
+				<h:column>
+					<f:facet name="header">Roles</f:facet>
+					#{cliente.roles}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Accion</f:facet>
+					<h:commandButton action="#{adminMB.eliminarCliente(cliente.idAppUser)}" value="Eliminar"/>
+				</h:column>
+			</h:dataTable>
+		
+		</h:form>
+		
+		<h:form>
+			<table>
+				<tr>
+					<th colspan="7">Nuevo cliente</th>
+				</tr>
+				<tr>
+					<th>DNI</th>
+					<th>Nombre</th>
+					<th>Apellidos</th>
+					<th>Direccion</th>
+					<th>Contraseña</th>
+					<th>Rol</th>
+					<th>Accion</th>
+				</tr>
+				<tr>
+					<td>
+						<h:inputText id="dni" value="#{clienteMB.entity.username}" required="true" requiredMessage="ERROR! Tienes que añadir tu DNI"/>
+						<h:message for="dni" style="color:red; font-size:10px;"/>
+					</td>
+					<td>
+						<h:inputText id="nombre" value="#{clienteMB.entity.nombre}" required="true" requiredMessage="ERROR! Tienes que añadir tu nombre"/>
+						<h:message for="nombre" style="color:red; font-size:10px;"/>
+					</td>
+					<td>
+						<h:inputText id="apellidos" value="#{clienteMB.entity.apellido}" required="true" requiredMessage="ERROR! Tienes que añadir tus apellidos"/>
+						<h:message for="apellidos" style="color:red; font-size:10px;"/>
+					</td>
+					<td>
+						<h:inputText id="direccion" value="#{clienteMB.entity.direccion}"/>
+					</td>
+					<td>
+						<h:inputText id="contrasena" value="#{clienteMB.entity.password}" required="true" requiredMessage="ERROR! Tienes que añadir una contraseña"/>
+						<h:message for="contrasena" style="color:red; font-size:10px;"/>
+					</td>
+					<td>
+						<h:inputText id="rol" value="#{clienteMB.entity.roles}" required="true" requiredMessage="ERROR! Tienes que añadir un rol"/>
+						<h:message for="rol" style="color:red; font-size:10px;"/>
+					</td>
+					<td>
+						<h:commandButton action="#{adminMB.anadirCliente(clienteMB.entity)}" value="Añadir" />
+					</td>
+				</tr>
+			</table>
+		</h:form>
+		
+		<h2>Lista de pedidos</h2>
+		<h:form>
+			<h:dataTable value="#{adminMB.pedidos}" var="pedido">
+				<f:facet name="header">Listado</f:facet>
+				
+				<h:column>
+					<f:facet name="header">Referencia</f:facet>
+					#{pedido.idPedido}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Fecha</f:facet>
+					#{pedido.fechaHora}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Cliente</f:facet>
+					#{pedido.appUser.nombre}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Producto</f:facet>
+					#{pedido.producto.descripcion}
+				</h:column>
+				<h:column>
+					<f:facet name="header">Estado</f:facet>
+					<h:outputText value="Enviado" rendered="#{pedido.enviado}"/>
+					<h:outputText value="Pendiente" rendered="#{!pedido.enviado}"/>
+				</h:column>
+				<h:column>
+					<f:facet name="header">Acciones</f:facet>
+					<h:commandButton action="#{adminMB.eliminarPedido(pedido.idPedido)}" value="Eliminar" rendered="#{pedido.enviado}" />
+					<h:commandButton action="#{adminMB.enviarPedido(pedido.idPedido)}" value="Enviar" rendered="#{!pedido.enviado}" />
+					<h:commandButton action="#{adminMB.eliminarPedido(pedido.idPedido)}" value="Cancelar" rendered="#{!pedido.enviado}" />
+				</h:column>
+			</h:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

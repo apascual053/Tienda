@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+	<ui:composition template="layout.xhtml">
+		<ui:define name="title">Página del USUARIO</ui:define>
+		<ui:define name="content">
+			<h1>Bienvenido</h1>
+			<h2>Lista de Artículos</h2>
+			<h:form>
+				<h:dataTable value="#{userMB.productos}" var="prod" border="2">
+					<h:column>
+						<f:facet name="header">Referencia</f:facet>
+						#{prod.idProducto}
+					</h:column>
+					<h:column>
+						<f:facet name="header">Categoria</f:facet>
+						#{prod.categoria.tipo}
+					</h:column>		
+					<h:column>
+						<f:facet name="header">Descripcion</f:facet>
+						#{prod.descripcion}
+					</h:column>
+					<h:column>
+						<f:facet name="header">Precio</f:facet>
+						#{prod.precio} €
+					</h:column>
+					<h:column>
+						<f:facet name="header">Accion</f:facet>
+						<h:commandButton action="#{userMB.anadirCarrito(prod.idProducto)}" value="Comprar" />
+					</h:column>
+				</h:dataTable>
+				
+				<br></br>
+				
+				DNI:<h:inputText id="dni" value="#{userMB.dni}" required="true" requiredMessage="ERROR! Tienes que añadir el usuario" />
+				<h:message for="dni" style="color:red" />
+				
+				<br></br>
+				
+				Contraseña: <h:inputSecret id="pswd" value="#{userMB.pswd}" required="true" requiredMessage="ERROR! Tienes que añadir la contraseña" />
+				<h:message for="pswd" style="color:red" />
+				
+				<h:message for="" style="color:red" />
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</html>

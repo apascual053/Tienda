@@ -1,0 +1,108 @@
+/* Estilos generales */
+body {
+	text-align: center;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+/* Estilos para el encabezado */
+#header {
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+}
+
+#header h1 {
+	text-align: center;
+    margin: 0;
+    font-size: 36px;
+}
+
+/* Estilos para el pie de página */
+#footer {
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+}
+
+/* Estilos para tablas */
+table {
+    width: 100%; /* Ocupa el ancho completo de su contenedor */
+    border-collapse: collapse;
+    margin-bottom: 5px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* Estilos para formularios */
+form {
+    text-align: left;
+    width: 60%; /* Ocupa el ancho completo de su contenedor */
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-sizing: border-box; /* Incluye el padding en el ancho total */
+}
+
+form input[type="text"],
+form input[type="password"],
+form select {
+    width: calc(100% - 40px); /* Resta el padding para mantener el ancho correcto */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    
+}
+
+form input[type="submit"] {
+    width: 100%; /* Ocupa el ancho completo */
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+/* Estilos para secciones */
+.section {
+    width: 100%; /* Ocupa el ancho completo de la página */
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.section h2 {
+    margin-bottom: 20px;
+}
