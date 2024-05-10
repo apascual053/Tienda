@@ -7,7 +7,6 @@ import javax.annotation.Resource;
 import javax.ejb.EJBContext;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.json.JsonObject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
@@ -16,6 +15,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
+import org.jboss.resteasy.annotations.jaxrs.FormParam;
 
 import dl.AppUser;
 import dl.Pedido;
@@ -35,19 +36,19 @@ public class UserEJB {
 
 		@Path("/anadir")
 		@POST
-		@Consumes(MediaType.APPLICATION_JSON)
+		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 		@Produces(MediaType.TEXT_PLAIN)
-		public ResultCode anadirCarrito(JsonObject data) {
-			
-			System.out.println("New order request received: User=" + data.getString("username") + " Password=" + data.getString("password") + " Product=" + data.getInt("idProducto"));
+		public ResultCode anadirCarrito(@FormParam("username") String username,
+									    @FormParam("password") String password,
+									    @FormParam("idProducto") int idProducto) {
 			
 			try {
-				AppUser cliente = em.createNamedQuery("AppUser.findAllUsername", AppUser.class).setParameter("username", data.getString("username")).getSingleResult();
+				AppUser cliente = em.createNamedQuery("AppUser.findAllUsername", AppUser.class).setParameter("username", username).getSingleResult();
 
-				if(cliente.getPassword().equals(data.getString("password"))) {
+				if(cliente.getPassword().equals(password)) {
 					Pedido pedido = new Pedido();
 
-					Producto producto = em.find(Producto.class, data.getInt("idProducto"));
+					Producto producto = em.find(Producto.class, idProducto);
 
 					pedido.setAppUser(cliente);
 					pedido.setProducto(producto);

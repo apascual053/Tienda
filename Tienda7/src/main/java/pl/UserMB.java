@@ -8,11 +8,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import javax.json.Json;
-import javax.json.JsonObject;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Form;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
@@ -41,13 +40,12 @@ public class UserMB implements Serializable{
 	
 	public void anadirCarrito(int idProducto) {
 		
-		JsonObject data = Json.createObjectBuilder()
-				.add("username", dni)
-				.add("password", pswd)
-				.add("idProducto", idProducto)
-				.build();
+		Form data = new Form();
+		data.param("username", dni);
+		data.param("password", pswd);
+		data.param("idProducto", Integer.toString(idProducto));
 		
-		ResultCode result = cliente.path("anadir").request(MediaType.TEXT_PLAIN).post(Entity.json(data), ResultCode.class);
+		ResultCode result = cliente.path("anadir").request(MediaType.TEXT_PLAIN).post(Entity.form(data), ResultCode.class);
 		
 		if (result != ResultCode.OK) {
 			FacesContext context = FacesContext.getCurrentInstance();
