@@ -3,12 +3,15 @@ package bl;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBContext;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.websocket.server.PathParam;
+
+import org.jboss.ejb3.annotation.SecurityDomain;
 
 import dl.AppUser;
 import dl.Categoria;
@@ -17,6 +20,8 @@ import dl.Producto;
 
 @LocalBean
 @Stateless
+@SecurityDomain("ExamDbApplicationDomain")
+@RolesAllowed("admin")
 public class AdminEJB {
 	
 	public enum ResultCode {OK,ERROR, SHORT_PSWD, USER_EXIST, PROD_EXIST};

@@ -7,7 +7,7 @@
 	<ui:composition template="layout.xhtml">
 		<ui:define name="title">Página del USUARIO</ui:define>
 		<ui:define name="content">
-			<h1>Bienvenido</h1>
+			<h1>Bienvenido #{userMB.getNombre()}</h1>
 			<h2>Lista de Artículos</h2>
 			<h:form>
 				<h:dataTable value="#{userMB.productos}" var="prod" border="2">
@@ -34,14 +34,6 @@
 				</h:dataTable>
 				
 				<br></br>
-				
-				DNI:<h:inputText id="dni" value="#{userMB.dni}" required="true" requiredMessage="ERROR! Tienes que añadir el usuario" />
-				<h:message for="dni" style="color:red" />
-				
-				<br></br>
-				
-				Contraseña: <h:inputSecret id="pswd" value="#{userMB.pswd}" required="true" requiredMessage="ERROR! Tienes que añadir la contraseña" />
-				<h:message for="pswd" style="color:red" />
 				
 				<h:message for="" style="color:red" />
 			</h:form>

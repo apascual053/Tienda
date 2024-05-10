@@ -9,14 +9,10 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
-import org.jboss.resteasy.annotations.jaxrs.FormParam;
 
 import dl.AppUser;
 import dl.Pedido;
@@ -34,34 +30,25 @@ public class UserEJB {
 		@Resource 
 		private EJBContext ejbContext;
 
-		@Path("/anadir")
-		@POST
-		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-		@Produces(MediaType.TEXT_PLAIN)
-		public ResultCode anadirCarrito(@FormParam("username") String username,
-									    @FormParam("password") String password,
-									    @FormParam("idProducto") int idProducto) {
+		public ResultCode anadirCarrito(int idProducto) {
 			
 			try {
+				String username = ejbContext.getCallerPrincipal().getName();
 				AppUser cliente = em.createNamedQuery("AppUser.findAllUsername", AppUser.class).setParameter("username", username).getSingleResult();
 
-				if(cliente.getPassword().equals(password)) {
-					Pedido pedido = new Pedido();
+				Pedido pedido = new Pedido();
 
-					Producto producto = em.find(Producto.class, idProducto);
+				Producto producto = em.find(Producto.class, idProducto);
 
-					pedido.setAppUser(cliente);
-					pedido.setProducto(producto);
-					pedido.setEnviado(false);
-					pedido.setFechaHora(new Date());
+				pedido.setAppUser(cliente);
+				pedido.setProducto(producto);
+				pedido.setEnviado(false);
+				pedido.setFechaHora(new Date());
 
-					em.persist(pedido);
-					return ResultCode.OK;
-				} else {
-					return ResultCode.BAD_PASWD;
-				}
+				em.persist(pedido);
+				return ResultCode.OK;
 
-				
+
 			} catch(Exception e) {
 				return ResultCode.NO_USER;
 			}
@@ -75,5 +62,15 @@ public class UserEJB {
 			List<Producto> productos = em.createNamedQuery("Producto.findAll", Producto.class).getResultList();
 			
 			return productos;
-		}		
+		}
+
+		public String obtenerNombre() {
+			try {
+				String username = ejbContext.getCallerPrincipal().getName();
+				AppUser cliente = em.createNamedQuery("AppUser.findAllUsername", AppUser.class).setParameter("username", username).getSingleResult();
+				return cliente.getNombre();
+			} catch (Exception e) {
+				return e.getMessage();
+			}
+		}	
 }

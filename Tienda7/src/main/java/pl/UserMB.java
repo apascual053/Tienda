@@ -9,9 +9,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Form;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
@@ -40,12 +38,7 @@ public class UserMB implements Serializable{
 	
 	public void anadirCarrito(int idProducto) {
 		
-		Form data = new Form();
-		data.param("username", dni);
-		data.param("password", pswd);
-		data.param("idProducto", Integer.toString(idProducto));
-		
-		ResultCode result = cliente.path("anadir").request(MediaType.TEXT_PLAIN).post(Entity.form(data), ResultCode.class);
+		ResultCode result = ejb.anadirCarrito(idProducto);
 		
 		if (result != ResultCode.OK) {
 			FacesContext context = FacesContext.getCurrentInstance();
@@ -72,5 +65,9 @@ public class UserMB implements Serializable{
 
 	public void setPswd(String pswd) {
 		this.pswd = pswd;
+	}
+	
+	public String getNombre() {
+		return ejb.obtenerNombre();
 	}
 }
